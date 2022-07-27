@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
-// import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.geometry.Pos;
@@ -15,12 +14,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyCode;
 import javafx.event.ActionEvent;
-// import javafx.scene.input.KeyEvent;
-// import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
-// import javafx.event.Event;
 import javafx.geometry.Insets;
-// import javafx.scene.text.Font;
 import javafx.scene.Node;
 import java.util.ArrayList;
 
@@ -49,8 +44,6 @@ public class Jordle extends Application {
     //GridPane of boxes
     private static GridPane gp;
 
-    // private static boolean changed = false;
-
     //whether the last row has been submitted or not
     private static boolean enter = false;
 
@@ -67,44 +60,23 @@ public class Jordle extends Application {
             letters.add(Character.toString(word.charAt(i)));
         }
 
-        System.out.println("second");
-        // System.out.println(this.letters);
-
-        // String[] letters = new String[5];
-        // for (int i = 0; i < 5; i++) {
-        //  letters[i] = Character.toString(word.charAt(i));
-        // }
-
         vb.setPadding(new Insets(50));
         vb.setAlignment(Pos.CENTER);
 
         //title
         Label tit = new Label("Jordle");
-        // tit.setStyle("")
-        //set font?
-        vb.getChildren().add(tit);
 
-        System.out.println("third");
+        vb.getChildren().add(tit);
 
         //GRIDPANE
         gp = boxes();
         displayLetter(gp);
-        // firstColumn(new StackPane());
-        // middleColumns(new StackPane());
-
-        // for (StackPane sp: gp.getChildren()) {
-        //  column = sp.getColumnIndex();
-        //  row = sp.getRowIndex();
-
-        // }
-        System.out.println("fourth");
 
         gp.setAlignment(Pos.CENTER);
         gp.setHgap(10);
         gp.setVgap(10);
         vb.getChildren().add(gp);
 
-        //test gridpane
 
         //HBox
         HBox hb = new HBox(10);
@@ -113,9 +85,6 @@ public class Jordle extends Application {
 
         // label
         Label status = new Label("Try guessing a word!");
-        // if (guesses == 6 && last guess is wrong) {
-        //  status.setText("Game Over. The word was ...");
-        // }
         hb.getChildren().add(status);
 
 
@@ -133,7 +102,6 @@ public class Jordle extends Application {
         System.out.println("here");
         stage.show();
 
-        // System.out.println(letters);
 
         gp.getChildren().get(0).requestFocus(); //how do i get the key input to focus??
         //can i request focus on more than one node?
@@ -146,7 +114,6 @@ public class Jordle extends Application {
     private static GridPane boxes() {
         //how to keep track of which box?
         //how to travel between the boxes?
-        // System.out.println(letters);
 
         // StackPane[][] gridPaneNodes = new StackPane[5][6];
         GridPane gridp = new GridPane();
@@ -192,22 +159,14 @@ public class Jordle extends Application {
         System.out.println("fifth");
         StackPane thisLetter = sp;
         int ind = grids.indexOf(thisLetter);
-        // System.out.println(grids.indexOf(thisLetter));
-        // StackPane nextLetter = gridPaneNodes[column + 1][row];
-        // System.out.println(grids.indexOf(thisLetter));
+        
         StackPane nextLetter = grids.get(ind + 1);
-        // System.out.println("sixth");
 
         //ENTER: ALERT, LETTER: NEXT BOX
         thisLetter.setOnKeyReleased(e -> {
-            // System.out.println("182");
             if (e.getCode() == KeyCode.ENTER && index % 5 == 0 && index != 0) {
                 // displayAlert();
-                // System.out.println("188");
-                System.out.println(letters);
-                System.out.println(grids.size());
                 StackPane s = grids.get(0);
-                System.out.println("213");
 
                 for (int i = 0; i < 5; i++) {
                     String correctLetter = Jordle.letters.get(i);
@@ -223,16 +182,7 @@ public class Jordle extends Application {
                         ((Rectangle) (stack.getChildren().get(0))).setFill(Color.GRAY);
                     }
                     enter = true;
-                    // String s = letters.get(0);
-                    // System.out.println(s);
-                    // System.out.println(letters.get(0));
-                    // System.out.println(letters.get(i));
-                    // System.out.println(gridPaneNodes[i][currentRow].getChildren().get(1));
-                    // if (letters.get(i).equals(gridPaneNodes[i][currentRow].getChildren().get(1))) {
-                        //pass
-                        //change color to green
-                    // } else if (//letter is in the word)
-                    System.out.println(correct);
+                    
                     if (correct == 5) {
                         HBox h = (HBox) (vb.getChildren().get(2));
                         Label status = (Label) (h.getChildren().get(0));
@@ -259,10 +209,7 @@ public class Jordle extends Application {
     private static void displayLetter(GridPane gridp) {
         StackPane thisLetter = grids.get(index);
         gridp.setOnKeyPressed(e -> {
-            // System.out.println("272");
-            System.out.println(index);
             if (index <= 29 && e.getCode().isLetterKey() && e.getCode() != KeyCode.TAB && correct != 5) {
-                // System.out.println("274");
                 StackPane s = (StackPane) (gridp.getChildren().get(index));
 
                 if (index % 5 == 0 && index != 0
@@ -290,7 +237,7 @@ public class Jordle extends Application {
                 System.out.println("297");
                 if (enter && index % 5 == 0) {
                     //do nothing
-                    System.out.println("300");
+                    System.out.println("240");
                 } else {
                     StackPane previous = grids.get(index - 1);
                     if (previous.getChildren().size() >= 2) {
@@ -303,13 +250,10 @@ public class Jordle extends Application {
                             System.out.println(index);
                         }
                     } else {
-                        System.out.println("312");
-                        // previous.requestFocus();
                         if (previous.getChildren().size() >= 2) {
                             Node n = previous.getChildren().remove(1);
                             if (n != null) {
                                 index--;
-                                System.out.println(index);
                             }
                         }
                     }
