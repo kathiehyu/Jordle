@@ -60,44 +60,22 @@ public class Jordle extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Jordle");
-        System.out.println(word);
 
         letters = new ArrayList<>();
         for (int i = 0;  i < 5; i++) {
             letters.add(Character.toString(word.charAt(i)));
         }
 
-        System.out.println("second");
-        // System.out.println(this.letters);
-
-        // String[] letters = new String[5];
-        // for (int i = 0; i < 5; i++) {
-        //  letters[i] = Character.toString(word.charAt(i));
-        // }
-
         vb.setPadding(new Insets(50));
         vb.setAlignment(Pos.CENTER);
 
         //title
         Label tit = new Label("Jordle");
-        // tit.setStyle("")
-        //set font?
         vb.getChildren().add(tit);
-
-        System.out.println("third");
 
         //GRIDPANE
         gp = boxes();
         displayLetter(gp);
-        // firstColumn(new StackPane());
-        // middleColumns(new StackPane());
-
-        // for (StackPane sp: gp.getChildren()) {
-        //  column = sp.getColumnIndex();
-        //  row = sp.getRowIndex();
-
-        // }
-        System.out.println("fourth");
 
         gp.setAlignment(Pos.CENTER);
         gp.setHgap(10);
@@ -113,16 +91,13 @@ public class Jordle extends Application {
 
         // label
         Label status = new Label("Try guessing a word!");
-        // if (guesses == 6 && last guess is wrong) {
-        //  status.setText("Game Over. The word was ...");
-        // }
         hb.getChildren().add(status);
 
 
         //restart button
-        Button restart = restartButton();
-        restart.setFocusTraversable(false);
-        hb.getChildren().add(restart);
+        // Button restart = restartButton();
+        // restart.setFocusTraversable(false);
+        // hb.getChildren().add(restart);
 
 
         //instructions button
@@ -133,10 +108,7 @@ public class Jordle extends Application {
         System.out.println("here");
         stage.show();
 
-        // System.out.println(letters);
-
-        gp.getChildren().get(0).requestFocus(); //how do i get the key input to focus??
-        //can i request focus on more than one node?
+        gp.getChildren().get(0).requestFocus();
     }
 
     /**
@@ -144,21 +116,12 @@ public class Jordle extends Application {
      * @return the GridPane that holds the grid
      */
     private static GridPane boxes() {
-        //how to keep track of which box?
-        //how to travel between the boxes?
-        // System.out.println(letters);
-
-        // StackPane[][] gridPaneNodes = new StackPane[5][6];
         GridPane gridp = new GridPane();
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 StackPane sp = new StackPane();
                 Rectangle r = grid();
                 sp.getChildren().add(r);
-                //FOR ME
-                // sp.setOnMouseClicked(e -> {
-                //  sp.requestFocus();
-                // });
 
                 sp.setFocusTraversable(false);
 
@@ -169,7 +132,6 @@ public class Jordle extends Application {
         for (StackPane s: grids) {
             addKeyEvents(s);
         }
-        System.out.println("172");
         return gridp;
     }
 
@@ -189,32 +151,20 @@ public class Jordle extends Application {
      * @param sp the StackPane's KeyEvent to set.
      */
     private static void firstColumn(StackPane sp) {
-        System.out.println("fifth");
         StackPane thisLetter = sp;
         int ind = grids.indexOf(thisLetter);
-        // System.out.println(grids.indexOf(thisLetter));
-        // StackPane nextLetter = gridPaneNodes[column + 1][row];
-        // System.out.println(grids.indexOf(thisLetter));
         StackPane nextLetter = grids.get(ind + 1);
-        // System.out.println("sixth");
 
         //ENTER: ALERT, LETTER: NEXT BOX
         thisLetter.setOnKeyReleased(e -> {
-            // System.out.println("182");
             if (e.getCode() == KeyCode.ENTER && index % 5 == 0 && index != 0) {
-                // displayAlert();
-                // System.out.println("188");
-                System.out.println(letters);
-                System.out.println(grids.size());
                 StackPane s = grids.get(0);
-                System.out.println("213");
 
                 for (int i = 0; i < 5; i++) {
                     String correctLetter = Jordle.letters.get(i);
                     StackPane stack = grids.get(index - 5 + i);
                     String userLetter = (((Text) (stack.getChildren().get(1))).getText());
                     if (correctLetter.equals(userLetter)) {
-                        System.out.println("test");
                         ((Rectangle) (stack.getChildren().get(0))).setFill(Color.GREEN);
                         correct++;
                     } else if (letters.contains(userLetter)) {
@@ -223,16 +173,7 @@ public class Jordle extends Application {
                         ((Rectangle) (stack.getChildren().get(0))).setFill(Color.GRAY);
                     }
                     enter = true;
-                    // String s = letters.get(0);
-                    // System.out.println(s);
-                    // System.out.println(letters.get(0));
-                    // System.out.println(letters.get(i));
-                    // System.out.println(gridPaneNodes[i][currentRow].getChildren().get(1));
-                    // if (letters.get(i).equals(gridPaneNodes[i][currentRow].getChildren().get(1))) {
-                        //pass
-                        //change color to green
-                    // } else if (//letter is in the word)
-                    System.out.println(correct);
+               
                     if (correct == 5) {
                         HBox h = (HBox) (vb.getChildren().get(2));
                         Label status = (Label) (h.getChildren().get(0));
@@ -259,10 +200,7 @@ public class Jordle extends Application {
     private static void displayLetter(GridPane gridp) {
         StackPane thisLetter = grids.get(index);
         gridp.setOnKeyPressed(e -> {
-            // System.out.println("272");
-            System.out.println(index);
             if (index <= 29 && e.getCode().isLetterKey() && e.getCode() != KeyCode.TAB && correct != 5) {
-                // System.out.println("274");
                 StackPane s = (StackPane) (gridp.getChildren().get(index));
 
                 if (index % 5 == 0 && index != 0
@@ -281,16 +219,13 @@ public class Jordle extends Application {
                     Text letter = new Text(e.getText().toUpperCase());
                     s.getChildren().add(letter);
                     index++;
-                    System.out.println(index);
                     if (thisLetter.getChildren().size() > 1) {
                         enter = false;
                     }
                 }
             } else if (index != 0 && e.getCode() == KeyCode.BACK_SPACE) {
-                System.out.println("297");
                 if (enter && index % 5 == 0) {
                     //do nothing
-                    System.out.println("300");
                 } else {
                     StackPane previous = grids.get(index - 1);
                     if (previous.getChildren().size() >= 2) {
@@ -300,16 +235,12 @@ public class Jordle extends Application {
                         }
                         if (n != null) {
                             index--;
-                            System.out.println(index);
                         }
                     } else {
-                        System.out.println("312");
-                        // previous.requestFocus();
                         if (previous.getChildren().size() >= 2) {
                             Node n = previous.getChildren().remove(1);
                             if (n != null) {
                                 index--;
-                                System.out.println(index);
                             }
                         }
                     }
@@ -416,8 +347,6 @@ public class Jordle extends Application {
             Text in = new Text(i);
             BorderPane bp = new BorderPane(in);
             bp.setPadding(new Insets(50));
-
-            //why isnt it showing up :(())
 
             Scene s = new Scene(bp, 500, 400);
             inst.setScene(s);
